@@ -1,0 +1,249 @@
+html{
+	font-size: 12px;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: "Segoe UI";
+	background-size: cover;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+.app{
+	
+	width: 400px;
+	margin-top: 200px;
+	margin: 50px auto;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+	background-color: white;
+	border-radius: 5px;
+
+	&__header{
+		height: 50px;
+		background-color: rgb(39, 44, 65);
+		color: #465468;
+	}
+	&__body{
+		color: #455569;
+		padding: 0 25px;
+		&-info{
+			padding: 20px 0 10px;
+			font-weight: normal;
+			&-track{
+				font-size: 24px;
+			}
+			&-author{
+				padding: 4px 0;
+
+				font-size: 16px;
+			}
+			&-file{
+				padding: 14px 0;
+				font-weight: 100;
+				font-size: 15px;
+				&:hover {
+					cursor: pointer;
+					text-decoration: underline;
+				}
+				i{
+					margin-right: 5px;
+				}
+			}
+		}
+		&-timeline{
+			margin: 0 0 20px;
+			overflow: auto;
+			&-range{
+				height: 6px;
+				width: 100%;
+				border-radius: 4px;
+				background-color: #cdd2d7;
+				position: relative;
+				overflow: hidden;
+				&-inner{
+					background-color: #455569;
+					border-radius: 5px;
+					height: 100%;
+				}
+			}
+			&-timing{
+				margin: 5px 0;
+				font-weight: 100;
+				&_pre{
+					float: left;
+				}
+				&_last{
+					float: right;
+				}					
+			}
+	
+		}
+
+		&-controls{
+			padding-bottom: 20px;
+			position: relative;
+			&-button{
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 30px;
+				color: #455569;
+				display: inline-block;
+				vertical-align: middle;
+				border: 1px solid #455569;
+				margin-right: 10px;
+				cursor: pointer;
+
+				&:hover{
+					background-color: #cdd2d7;
+					border-color: #cdd2d7;
+				}
+				&:active{
+					background-color: rgba(69, 85, 105, 0.5);
+					border-color: transparent;
+
+				}
+
+				&_play{
+					width: 40px;
+					height: 40px;
+					line-height: 40px;
+					font-size: 20px;
+					padding: 1px 0 2px 3px;
+				}
+				&_stop{
+
+				}			  				
+			}
+
+		}
+	}
+}
+.app__list{
+	border-radius: 10px;
+	font-size: 14px;
+	line-height: 25px;
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	outline: none;
+	vertical-align: middle;
+	background-color: white;
+	position: absolute;
+	margin-top: 10px;
+	float: right;
+	right: 0;
+
+	&:hover, &:focus{
+		background-color: #cdd2d7;
+		 
+	}
+	&:focus &-selected, &:hover &-selected{
+		border-color: #cdd2d7;
+	}
+	&-selected{
+		border-radius: 10px;
+		padding: 0 30px 0 10px;
+		border: 1px solid #656565;
+		position: relative;
+
+		i{
+		  position: absolute;
+		  right: 9px;
+		  top: 5px;
+		}
+	}
+	&-hidden{
+		display: none;
+		span{
+		padding: 0 30px 0 10px;
+			display: block;
+			cursor: pointer;
+			border-radius: 10px;
+			border: 1px solid transparent;
+			a{
+				text-decoration: none;
+				color: #33383f;
+			}
+			&:hover{
+				background-color: rgba(69, 85, 105, 0.5);
+				color: white;
+			}
+		}
+	}
+	&:focus &-selected:hover{
+		background-color: rgba(69, 85, 105, 0.5);
+		border-color: transparent;
+
+		color: white;
+	}
+	&:focus &-selected{
+		//background-color: #455569;
+		//color: white;
+	}
+	&:focus	&-hidden{
+		display: block;
+		
+	}
+}
+.app__range{
+	display: inline-block;
+	margin: 0 28px;
+	i{
+		font-size: 18px;
+		vertical-align: middle;
+		margin-right: 5px;
+	}
+			&-full{
+			height: 2px;
+			width: 90px;
+			border-radius: 4px;
+			background-color: #cdd2d7;
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			&-current{
+				background-color: #455569;
+				border-radius: 5px;
+				height: 100%;
+				position: relative;
+				&-controll{
+					position: absolute;
+					width: 2px;
+					height: 10px;
+					right: -7px;
+					top:-4px;
+					cursor: pointer;
+					padding: 0 6px;
+					&:before{
+						content: "";
+						height: 100%;
+						width: 100%;
+						background-color: #455569;
+						display: block;
+					}
+				}
+			}
+		}
+}
+#dnd-area{
+	height: 100px;
+	position: relative;
+	cursor: pointer;
+	text-align: center;
+	line-height: 100px;
+	font-size: 20px;
+	font-family: "Segoe UI";
+	font-weight: 100;
+	border-radius: 5px 5px 0 0;
+	input{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		opacity: 0;
+		right: 0;
+		top:0;
+		cursor: pointer;
+	}
+}

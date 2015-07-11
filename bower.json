@@ -1,0 +1,28 @@
+{
+  "name": "airport",
+  "version": "0.0.1",
+  "authors": [
+    "Misha Anikanov"
+  ],
+  "description": "airport timetable",
+  "main": "index.html",
+  "keywords": [
+    "yandex",
+    "airport"
+  ],
+  "license": "MIT",
+  "homepage": "mvanikanov.ru",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#v4.2.0"
+  },
+  "devDependencies": {
+    "less": "https://github.com/less/less.js.git#v1.7.5"
+  }
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet/less" type="text/css" href="less/main.less" />
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/less/dist/less-1.7.5.js"></script>
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="app" id="app">
+			<div class="app__header" id="dnd-area">
+				<input type="file" id="file_input">
+				Перетащите сюда файл
+			</div>
+			<div class="app__body">
+				<div class="app__body-info">
+					<div class="app__body-info-track">Fire and Whispers</div>
+					<div class="app__body-info-author">IAMX</div>
+					<div class="app__body-info-file"><i class="fa fa-music"></i>Fire_and_whispers.mp3</div>
+				</div>
+				<div class="app__body-timeline">
+					<div class="app__body-timeline-range">
+						<div class="app__body-timeline-range-inner" style="width:40%;"></div>
+					</div>
+					<div class="app__body-timeline-timing app__body-timeline-timing_pre">2:34</div>
+					<div class="app__body-timeline-timing app__body-timeline-timing_last">-1:12</div>
+				</div>
+				<div class="app__body-controls">
+					<div class="app__body-controls-button app__body-controls-button_play">
+						<i class="fa fa-play"></i>
+					</div>
+					<div class="app__body-controls-button app__body-controls-button_stop">
+						<i class="fa fa-stop"></i>
+					</div>
+					<div class="app__range">
+						<i class="fa fa-volume-up"></i>
+						<div class="app__range-full">
+							<div class="app__range-full-current" style="width:40%;">
+								<div class="app__range-full-current-controll"></div>
+							</div>
+						</div>
+					</div>
+					<div class="app__list" tabindex="1">
+						<div class="app__list-selected">
+							<span>pop</span>
+							<i class="fa fa-sliders"></i>
+						</div>
+						<div class="app__list-hidden">
+							<span>classic</span>
+							<span>jazz</span>
+							<span>rock</span>
+							<span>normal</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+	</div>
+</body>
+</html>
