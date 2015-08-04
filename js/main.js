@@ -6,7 +6,6 @@ var app = {
 
 	init : function(){
 		var me = this;
-		console.log('init');
 
 
 		this.context 		= new (window.AudioContext || window.webkitAudioContext)();
@@ -72,7 +71,6 @@ var app = {
 	bindActions : function(){
 		var me = this;
 
-		console.log('bindActions');
 
 		$(me.dom['dndArea']).on('dragenter', function (e){
 			e.stopPropagation();
@@ -146,13 +144,12 @@ var app = {
 	readFiles : function(file){
 		var me = this;
 
-		console.log('readFiles');
     	
     	if(me.rawData){
     		if(me.isPlaying){
 				me.stopPlaying();
     		}
-    		me.reset();
+    		me.reset(new Date().getTime() - me.time);
     	}
     	
     	me.file = file;
@@ -160,7 +157,7 @@ var app = {
 
 	    var reader = new FileReader();
 	    reader.onload = function (e) {
-	        console.log(new Date().getTime() - me.time);
+	    	console.log('Start decode: ' + (new Date().getTime() - me.time) + 's.');
 	        me.rawData = e.target.result;
 	        me.decodeAudioData();
 	    };
@@ -171,7 +168,6 @@ var app = {
 	},
 	decodeAudioData : function(){
 		var me = this;
-		console.log('decodeAudioData');
 		var raw = me.rawData;
 
 
@@ -194,7 +190,6 @@ var app = {
 	},
 	createNewSource : function(start){
 		var me = this;
-		console.log('createNewSource');
 		me.source = me.context.createBufferSource();
 		me.source.buffer = me.buffer;
 	    me.source.connect(me.filters[0]); //источник
@@ -207,7 +202,7 @@ var app = {
 		    me.context.resume();    		
     	}catch(err){}
 
-	    console.log(new Date().getTime() - me.time);
+	    console.log('Start playing: ' + (new Date().getTime() - me.time)+'s.');
 		
 		me.playStart = me.context.currentTime;
 		me.isPlaying = true;
@@ -217,7 +212,6 @@ var app = {
 	},
 	createStuffToPlay : function(){
 
-		console.log('createStuffToPlay');
 
 		var me = this;
 		///////////equa
