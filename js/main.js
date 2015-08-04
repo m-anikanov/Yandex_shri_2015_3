@@ -119,7 +119,7 @@ var app = {
 			 	me.visualizer = 0; me.analyser.fftSize = 128;
 			 }
 
-			 if(!me.isPlaying) me.drawCanvasShot(true);
+			 if(!me.isPlaying&&me.playingOffset>0) me.drawCanvasShot(true);
 		});
 		
 		$(me.dom['app']).delegate(me.dom['volume'], 'input', function(e) {
