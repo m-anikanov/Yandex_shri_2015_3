@@ -1,6 +1,33 @@
+@font-face {
+    font-family: 'Segoe UI light';
+    src: url('../fonts/segoeuil.ttf');
+    src: url('../fonts/segoeuil.ttf') format('truetype'),
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('../fonts/segoeui.ttf');
+    src: url('../fonts/segoeui.ttf') format('truetype'),
+}
+
+
 html{
 	font-size: 12px;
+	box-shadow: inset 0 0 100px rgba(59, 57, 79, 0);
+	height: 100%;
+	transition: .4s;
+
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;          /* Likely future */
+
+	cursor: default;
+
+	&.dragover{
+		box-shadow: inset 0 0 100px rgba(59, 57, 79, 0.68);
+	}
 }
+
 body{
 	margin: 0;
 	padding: 0;
@@ -18,12 +45,85 @@ body{
 	border-radius: 5px;
 
 	&__header{
-		height: 50px;
 		background-color: rgb(39, 44, 65);
 		color: #69778C;
 		background-image: url('/img/1592159.png');
 		background-size: cover;
 		background-position: center;
+		line-height: 100px;
+		/*safari canvas overflow fix*/
+    	-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+		
+		height: 100px;
+		position: relative;
+		cursor: pointer;
+		text-align: center;
+		font-size: 20px;
+		font-family: "Segoe UI light";
+		border-radius: 5px 5px 0 0;
+		overflow: hidden;
+
+
+		&>input{
+			width: 100%;
+			height: 120%;
+			top:-20%;
+			right: 0;
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+		}
+		&-note{
+			font-size: 25px;
+			position: relative;
+			border-radius: 5px;
+			border: 1px solid transparent;
+			display: inline-block;
+			line-height: normal;
+  			padding: 5px 10px;
+			transition: border-color .3s linear;
+			opacity: 0.7;
+			top: 3px;
+		}
+
+		&:hover &-note{
+			border-color: #69778C;
+		}
+
+
+		&:hover &-cntrls{
+			display: block;
+		}		
+		&-cntrls{
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			line-height: normal;
+			font-size: 0;
+			display: none;
+			& i{
+				vertical-align: middle;
+				line-height: 16px;
+				text-align: center;
+				cursor: pointer;
+				width: 15px;
+				height: 15px;
+				display: inline-block;
+				font-size: 14px;
+				color:#1E2234;
+
+				border-radius: 0 50% 50% 0;
+				background-color: rgba(105, 119, 140, 0.5);
+				&:hover{
+					background-color: rgba(105, 119, 140, 1)
+				}
+				&:nth-child(1){
+				border-radius: 50% 0 0 50%;
+
+				}
+			}
+		}
+
 
 	}
 	&__body{
@@ -44,12 +144,20 @@ body{
 				padding: 14px 0;
 				font-weight: 100;
 				font-size: 15px;
+				display: inline-block;
+				text-decoration: none;
+				color: #455569;
+				display: none;
 				&:hover {
 					cursor: pointer;
 					text-decoration: underline;
 				}
+				span{
+					color: #455569;
+				}
 				i{
 					margin-right: 5px;
+					color: #455569;
 				}
 			}
 		}
@@ -103,7 +211,7 @@ body{
 					border-color: #cdd2d7;
 				}
 				&:active{
-					background-color: rgba(69, 85, 105, 0.5);
+					//background-color: rgba(69, 85, 105, 0.5);
 					border-color: transparent;
 
 				}
@@ -113,7 +221,11 @@ body{
 					height: 40px;
 					line-height: 40px;
 					font-size: 20px;
-					padding: 1px 0 2px 3px;
+					i.fa-pause{
+					}
+					i.fa-play{
+						padding-left: 4px;
+					}
 				}
 				&_stop{
 
@@ -122,133 +234,158 @@ body{
 
 		}
 	}
-}
-.app__list{
-	border-radius: 10px;
-	font-size: 14px;
-	line-height: 25px;
-	position: relative;
-	cursor: pointer;
-	display: inline-block;
-	overflow: hidden;
-	outline: none;
-	vertical-align: middle;
-	background-color: white;
-	position: absolute;
-	margin-top: 10px;
-	float: right;
-	right: 0;
-
-	&:hover, &:focus{
-		background-color: #cdd2d7;
-		 
-	}
-	&:focus &-selected, &:hover &-selected{
-		border-color: #cdd2d7;
-	}
-	&-selected{
+	&__list{
 		border-radius: 10px;
-		padding: 0 30px 0 10px;
-		border: 1px solid #656565;
+		font-size: 14px;
+		line-height: 25px;
 		position: relative;
-
-		i{
-		  position: absolute;
-		  right: 9px;
-		  top: 5px;
-		}
-	}
-	&-hidden{
-		display: none;
-		span{
-		padding: 0 30px 0 10px;
-			display: block;
-			cursor: pointer;
-			border-radius: 10px;
-			border: 1px solid transparent;
-			a{
-				text-decoration: none;
-				color: #33383f;
-			}
-			&:hover{
-				background-color: rgba(69, 85, 105, 0.5);
-				color: white;
-			}
-		}
-	}
-	&:focus &-selected:hover{
-		background-color: rgba(69, 85, 105, 0.5);
-		border-color: transparent;
-
-		color: white;
-	}
-	&:focus &-selected{
-		//background-color: #455569;
-		//color: white;
-	}
-	&:focus	&-hidden{
-		display: block;
-		
-	}
-}
-.app__range{
-	display: inline-block;
-	margin: 0 28px;
-	i{
-		font-size: 18px;
+		cursor: pointer;
+		display: inline-block;
+		outline: none;
 		vertical-align: middle;
-		margin-right: 5px;
-	}
-			&-full{
-			height: 2px;
-			width: 90px;
-			border-radius: 4px;
+		background-color: white;
+		position: absolute;
+		margin-top: 10px;
+		float: right;
+		right: 0;
+
+		&:hover, &:focus{
 			background-color: #cdd2d7;
-			display: inline-block;
-			vertical-align: middle;
+			 
+		}
+		&:focus &-selected, &:hover &-selected{
+			border-color: #cdd2d7;
+		}
+		&-selected{
+			border-radius: 10px;
+			padding: 0 30px 0 10px;
+			border: 1px solid #656565;
 			position: relative;
-			&-current{
-				background-color: #455569;
-				border-radius: 5px;
-				height: 100%;
-				position: relative;
-				&-controll{
-					position: absolute;
-					width: 2px;
-					height: 10px;
-					right: -7px;
-					top:-4px;
-					cursor: pointer;
-					padding: 0 6px;
-					&:before{
-						content: "";
-						height: 100%;
-						width: 100%;
-						background-color: #455569;
-						display: block;
-					}
+
+			i{
+			  position: absolute;
+			  right: 9px;
+			  top: 5px;
+			}
+		}
+		&-hidden{
+			display: none;
+			span{
+			padding: 0 30px 0 10px;
+				display: block;
+				cursor: pointer;
+				border-radius: 10px;
+				border: 1px solid transparent;
+				a{
+					text-decoration: none;
+					color: #33383f;
+				}
+				&:hover{
+					background-color: rgba(69, 85, 105, 0.5);
+					color: white;
 				}
 			}
 		}
-}
-#dnd-area{
-	height: 100px;
-	position: relative;
-	cursor: pointer;
-	text-align: center;
-	line-height: 100px;
-	font-size: 20px;
-	font-family: "Segoe UI";
-	font-weight: 100;
-	border-radius: 5px 5px 0 0;
-	overflow: hidden;
-	input{
-		width: 100%;
-		height: 120%;
-		top:-20%;
-		right: 0;
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
+		&:focus &-selected:hover{
+			background-color: rgba(69, 85, 105, 0.5);
+			border-color: transparent;
+
+			color: white;
+		}
+		&:focus &-selected{
+			//background-color: #455569;
+			//color: white;
+		}
+		&:focus	&-hidden{
+			display: block;
+			
+		}
 	}
+	&__range{
+		display: inline-block;
+		margin: 0 28px;
+		i{
+			font-size: 18px;
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+
+
+		&-wrap{
+			overflow: hidden;
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+			width: 90px;
+		}
+
+	}
+
+	input[type=range] {
+	  -webkit-appearance: none;
+	  margin: 5px 0;
+	    width: 100%;
+		outline: none;
+	    position: relative;
+	  display: block;
+	}
+	input[type=range]:focus {
+	  outline: none;
+	}
+	input[type=range]::-webkit-slider-runnable-track {
+	  width: 100%;
+	  height: 2px;
+	  cursor: pointer;
+	  background: #cdd2d7;
+	}
+	input[type=range]::-webkit-slider-thumb {
+	  height: 10px;
+	  width: 2px;
+	  background: #455569;
+	  cursor: pointer;
+	  -webkit-appearance: none;
+	  margin-top: -4.2px;
+	}
+	input[type=range]::-moz-range-track {
+	  width: 100%;
+	  height: 2px;
+	  cursor: pointer;
+	  background: #cdd2d7;
+	  outline: none;
+	}
+	input[type=range]:focus{
+
+	  outline: 1px solid white;
+	}
+	input[type=range]::-moz-range-thumb {
+	  height: 10px;
+	  width: 2px;
+	  background: #455569;
+	  cursor: pointer;
+	  border-radius: 0;
+	  border:none;
+	}
+
+	input[type=range]::-webkit-slider-thumb:before{
+		content: "";
+		width: 100%;
+		height: 2px;
+		background-color: #455569;
+		position: absolute;
+		top:0px;
+		margin-left:-100%;
+		pointer-events: none;
+	}
+
+	input[type=range]::-moz-range-progress{
+		background-color: #455569;
+	}
+
 }
+
+
+
+
+
+
+

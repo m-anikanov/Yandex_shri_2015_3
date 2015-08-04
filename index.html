@@ -2,58 +2,54 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>ШРИ 2015</title>
 	<link rel="stylesheet/less" type="text/css" href="less/main.less" />
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="js/main.js"></script>
 	<script src="bower_components/less/dist/less-1.7.5.js"></script>
+	<script src="bower_components/JavaScript-ID3-Reader/dist/id3-minimized.js"></script>
+	<script src="js/main.js"></script>
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="app" id="app">
-			<div class="app__header" id="dnd-area">
-				<input type="file" id="file_input">
-				Перетащите сюда файл
+
+			<div class="app__header" id="app__dnd-area">
+				<div class="app__header-note">Выберите файл</div>
+				<canvas width="400" height="100" id="app__visualization"></canvas>
+				<input type="file" id="app__file-input">
+				<div class="app__header-cntrls">
+					<i class="fa fa-caret-left" id="app__visualizer-next"></i>
+					<i class="fa fa-caret-right" id="app__visualizer-prev"></i>
+				</div>
 			</div>
 			<div class="app__body">
 				<div class="app__body-info">
-					<div class="app__body-info-track">Fire and Whispers</div>
-					<div class="app__body-info-author">IAMX</div>
-					<div class="app__body-info-file"><i class="fa fa-music"></i>Fire_and_whispers.mp3</div>
+					<div class="app__body-info-track" id="app__track"></div>
+					<div class="app__body-info-author" id="app__author"></div>
+					<a class="app__body-info-file" id="app__file-info"><i class="fa fa-music"></i><span></span></a>
 				</div>
 				<div class="app__body-timeline">
 					<div class="app__body-timeline-range">
-						<div class="app__body-timeline-range-inner" style="width:40%;"></div>
+						<div class="app__body-timeline-range-inner" id="app__track-range" style="width:0%;"></div>
 					</div>
-					<div class="app__body-timeline-timing app__body-timeline-timing_pre">2:34</div>
-					<div class="app__body-timeline-timing app__body-timeline-timing_last">-1:12</div>
+					<div class="app__body-timeline-timing app__body-timeline-timing_pre" id="app__pre-timer">0:00</div>
+					<div class="app__body-timeline-timing app__body-timeline-timing_last" id="app__last-timer">-0:00</div>
 				</div>
 				<div class="app__body-controls">
-					<div class="app__body-controls-button app__body-controls-button_play">
+					<div id="app__play-button" class="app__body-controls-button app__body-controls-button_play">
 						<i class="fa fa-play"></i>
 					</div>
-					<div class="app__body-controls-button app__body-controls-button_stop">
+					<div id="app__stop-button" class="app__body-controls-button app__body-controls-button_stop">
 						<i class="fa fa-stop"></i>
 					</div>
 					<div class="app__range">
 						<i class="fa fa-volume-up"></i>
-						<div class="app__range-full">
-							<div class="app__range-full-current" style="width:40%;">
-								<div class="app__range-full-current-controll"></div>
-							</div>
+						<div class="app__range-wrap">
+							<input type="range" id="app__volume" min="0" max="1" step="0.01" value="0.5">
 						</div>
 					</div>
-					<div class="app__list" tabindex="1">
-						<div class="app__list-selected">
-							<span>pop</span>
-							<i class="fa fa-sliders"></i>
-						</div>
-						<div class="app__list-hidden">
-							<span>classic</span>
-							<span>jazz</span>
-							<span>rock</span>
-							<span>normal</span>
-						</div>
+					<div class="app__list" tabindex="1" id="app__eq-select">
+
 					</div>
 				</div>
 			</div>
