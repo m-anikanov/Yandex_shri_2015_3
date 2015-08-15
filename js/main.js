@@ -31,27 +31,39 @@ var app = {
 		var timerId 		= setInterval(function(){ me.isPlaying ? me.updateInfo() : false }, 100)
 
 		this.dom 			= {
-			dndArea 		: 'html',
-			app 			: '#app',
-			visualization 	: '#app__visualization',
-			preTimer 		: '#app__pre-timer',
-			lastTimer 		: '#app__last-timer',
-			trackRange 		: '#app__track-range',
-			fileInput 		: '#app__file-input',
-			eqSelect 		: '#app__eq-select',
-			eqSelectHidSpan : '.app__list-hidden span',
-			eqSelectSelSpan : '.app__list-selected span',
-			playBtn 		: '#app__play-button',
-			playBtnI 		: '#app__play-button i',
-			stopBtn 		: '#app__stop-button',
-			track 			: '#app__track',
-			artist			: '#app__author',
-			fileName 		: '#app__file-info span',
-			fileNameA 		: 'a#app__file-info',
-			volume 			: '#app__volume',
-			headerNote		: '.app__header-note'
+			get : function(el){
+				return this.elems[el] ? this.elems[el] : $(this.selectors[el]);
+			},
+			selector : function(el){
+				return this.selectors[el];
+			},
+			elems : {},
+			selectors : {
+				dndArea 		: 'html',
+				app 			: '#app',
+				visualization 	: '#app__visualization',
+				preTimer 		: '#app__pre-timer',
+				lastTimer 		: '#app__last-timer',
+				trackRange 		: '#app__track-range',
+				fileInput 		: '#app__file-input',
+				eqSelect 		: '#app__eq-select',
+				eqSelectHidSpan : '.app__list-hidden span',
+				eqSelectSelSpan : '.app__list-selected span',
+				playBtn 		: '#app__play-button',
+				playBtnI 		: '#app__play-button i',
+				stopBtn 		: '#app__stop-button',
+				track 			: '#app__track',
+				artist			: '#app__author',
+				fileName 		: '#app__file-info span',
+				fileNameA 		: 'a#app__file-info',
+				volume 			: '#app__volume',
+				headerNote		: '.app__header-note',
+				headerControls  : '.app__header-cntrls i'			
+			}
 
-		}
+
+		};
+
 		this.reset();
 
 		this.bindActions();
@@ -72,21 +84,21 @@ var app = {
 		var me = this;
 
 
-		$(me.dom['dndArea']).on('dragenter', function (e){
+		me.dom.get('dndArea').on('dragenter', function (e){
 			e.stopPropagation();
 			e.preventDefault();
 		});
-		$(me.dom['dndArea']).on('dragleave', function (e){
+		me.dom.get('dndArea').on('dragleave', function (e){
 			$(this).removeClass('dragover');
 			e.stopPropagation();
 			e.preventDefault();
 		});
-		$(me.dom['dndArea']).on('dragover', function (e){
+		me.dom.get('dndArea').on('dragover', function (e){
 			e.stopPropagation();
 			e.preventDefault();
 			$(this).addClass('dragover');
 		});
-		$(me.dom['dndArea']).on('drop', function (e)
+		me.dom.get('dndArea').on('drop', function (e)
 		{
 			e.stopPropagation();
 			e.preventDefault();
@@ -96,22 +108,22 @@ var app = {
 			me.time = new Date().getTime();
 		});
 
-		$(me.dom['fileInput']).on('change',function(e){
+		me.dom.get('fileInput').on('change',function(e){
 			
 			me.time = new Date().getTime();
 			me.readFiles(this.files[0]);
 		})
 		
-		$(me.dom['app']).delegate(me.dom['playBtn'], 'click', function(e){
+		me.dom.get('app').delegate(me.dom.selector('playBtn'), 'click', function(e){
 
 			me.isPlaying ? me.stopPlaying() : me.createNewSource(true);
 		});
 		
-		$(me.dom['app']).delegate(me.dom['stopBtn'], 'click', function(e){
+		me.dom.get('app').delegate(me.dom.selector('stopBtn'), 'click', function(e){
 			me.finishPlaying();
 		});
 		
-		$(me.dom['app']).delegate('.app__header-cntrls i', 'click', function(e){
+		me.dom.get('app').delegate(me.dom.selector('headerControls'), 'click', function(e){
 
 			 if(me.visualizer == 0){
 			 	me.visualizer = 1; me.analyser.fftSize = 256;
@@ -122,18 +134,18 @@ var app = {
 			 if(!me.isPlaying&&me.playingOffset>0) me.drawCanvasShot(true);
 		});
 		
-		$(me.dom['app']).delegate(me.dom['volume'], 'input', function(e) {
+		me.dom.get('app').delegate(me.dom.selector('volume'), 'input', function(e) {
 		
 		    me.gainNode.gain.value = this.value;
 		});
 		
-		$(me.dom['eqSelect']).delegate(me.dom['eqSelectHidSpan'], 'click', function(e){
+		me.dom.get('eqSelect').delegate(me.dom.selector('eqSelectHidSpan'), 'click', function(e){
 
-			var select 	= $(this).closest(me.dom['eqSelect']);
+			var select 	= $(this).closest(me.dom.selector('eqSelect'));
 			var sid 	= $(this).attr('data-sid');
 			
-			select.find(me.dom['eqSelectSelSpan']).html(sid);
-			select.find(me.dom['eqSelectHidSpan']).css({display:'block'})
+			select.find(me.dom.selector('eqSelectSelSpan')).html(sid);
+			select.find(me.dom.selector('eqSelectHidSpan')).css({display:'block'})
 			$(this).css({display:'none'});
 
 			select.blur();
@@ -178,7 +190,7 @@ var app = {
 	            return;
 	        }
 
-	        $(me.dom['headerNote']).fadeOut();
+	        me.dom.get('headerNote').fadeOut();
 
 	        me.buffer = buffer;
 	        me.createNewSource(true);
@@ -207,7 +219,7 @@ var app = {
 		me.playStart = me.context.currentTime;
 		me.isPlaying = true;
 
-		$(me.dom['playBtnI']).removeClass().addClass('fa fa-pause');
+		me.dom.get('playBtnI').removeClass().addClass('fa fa-pause');
 
 	},
 	createStuffToPlay : function(){
@@ -273,7 +285,7 @@ var app = {
 
 		var WIDTH = 400;
 		var HEIGHT = 100;
-		var canvas = $(me.dom['visualization'])[0].getContext("2d");
+		var canvas = me.dom.get('visualization')[0].getContext("2d");
 		var bufferLength = me.analyser.frequencyBinCount;
 
 		canvas.clearRect(0, 0, WIDTH, HEIGHT);
@@ -341,7 +353,7 @@ var app = {
 		this.isPlaying = false;
 
 
-		$(me.dom['playBtnI']).removeClass().addClass('fa fa-play');
+		me.dom.get('playBtnI').removeClass().addClass('fa fa-play');
 
 	},
 	finishPlaying : function(){
@@ -349,7 +361,7 @@ var app = {
 
 		me.stopPlaying();
 
-		var canvas = $(me.dom['visualization'])[0].getContext("2d");
+		var canvas = me.dom.get('visualization')[0].getContext("2d");
 		canvas.clearRect(0, 0, 400, 100);
 
 
@@ -367,11 +379,11 @@ var app = {
 		
 		var duration = me.source.buffer.duration;
 
-		$(me.dom['preTimer']).html( (res>3600 ? parseInt(res/3600) + ':' : '') + parseInt((res % 3600) / 60).pad() + ':' + parseInt((res % 3600) % 60).pad());
+		me.dom.get('preTimer').html( (res>3600 ? parseInt(res/3600) + ':' : '') + parseInt((res % 3600) / 60).pad() + ':' + parseInt((res % 3600) % 60).pad());
 
-		$(me.dom['lastTimer']).html( '-'+((duration - res)>3600 ? parseInt((duration - res)/3600) + ':' : '') + parseInt(((duration - res) % 3600) / 60).pad() + ':' + parseInt(((duration - res) % 3600) % 60).pad());
+		me.dom.get('lastTimer').html( '-'+((duration - res)>3600 ? parseInt((duration - res)/3600) + ':' : '') + parseInt(((duration - res) % 3600) / 60).pad() + ':' + parseInt(((duration - res) % 3600) % 60).pad());
 
-		$(me.dom['trackRange']).css({width:res*100/duration+'%'})
+		me.dom.get('trackRange').css({width:res*100/duration+'%'})
 
 	},
 
@@ -382,14 +394,14 @@ var app = {
 
 		ID3.loadTags(url, function() {
 			var tags = ID3.getAllTags(url);
-			$(me.dom['track']).html(tags.title ? tags.title : '');
-			$(me.dom['artist']).html(tags.artist ? tags.artist : '');
+			me.dom.get('track').html(tags.title ? tags.title : '');
+			me.dom.get('artist').html(tags.artist ? tags.artist : '');
 
-			$(me.dom['fileName']).html(me.file.name ? me.file.name : '');
-			$(me.dom['fileNameA'])[0].href = window.URL.createObjectURL(me.file);
-			$(me.dom['fileNameA'])[0].download = me.file.name;
+			me.dom.get('fileName').html(me.file.name ? me.file.name : '');
+			me.dom.get('fileNameA')[0].href = window.URL.createObjectURL(me.file);
+			me.dom.get('fileNameA')[0].download = me.file.name;
 
-			$(me.dom['fileNameA']).css({display:'inline-block'});
+			me.dom.get('fileNameA').css({display:'inline-block'});
 		},{
         	tags: ["title","artist"],
         	dataReader: FileAPIReader(me.file)
@@ -418,7 +430,7 @@ var app = {
     		})
 			dropdown += '</div>';
 
-		$(me.dom['eqSelect']).html(dropdown);
+		me.dom.get('eqSelect').html(dropdown);
 		
     }
 }
