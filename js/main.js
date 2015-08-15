@@ -47,8 +47,8 @@ var app = {
 				trackRange 		: '#app__track-range',
 				fileInput 		: '#app__file-input',
 				eqSelect 		: '#app__eq-select',
-				eqSelectHidSpan : '.app__list-hidden span',
-				eqSelectSelSpan : '.app__list-selected span',
+				eqSelectHidSpan : '#app__list-hidden span',
+				eqSelectSelSpan : '#app__list-selected span',
 				playBtn 		: '#app__play-button',
 				playBtnI 		: '#app__play-button i',
 				stopBtn 		: '#app__stop-button',
@@ -57,8 +57,8 @@ var app = {
 				fileName 		: '#app__file-info span',
 				fileNameA 		: 'a#app__file-info',
 				volume 			: '#app__volume',
-				headerNote		: '.app__header-note',
-				headerControls  : '.app__header-cntrls i'			
+				headerNote		: '#app__header-note',
+				headerControls  : '#app__header-cntrls i'			
 			}
 
 
@@ -109,9 +109,10 @@ var app = {
 		});
 
 		me.dom.get('fileInput').on('change',function(e){
-			
-			me.time = new Date().getTime();
-			me.readFiles(this.files[0]);
+			if(this.files[0]){
+				me.time = new Date().getTime();
+				me.readFiles(this.files[0]);
+			}
 		})
 		
 		me.dom.get('app').delegate(me.dom.selector('playBtn'), 'click', function(e){
@@ -416,9 +417,9 @@ var app = {
     },
     initDropdown : function(sid){
     	me = this;
-    	var dropdown = '<div class="app__list-selected"><span>';
+    	var dropdown = '<div class="app__list-selected" id="app__list-selected"><span>';
     		dropdown += sid;
-    		dropdown += '</span><i class="fa fa-sliders"></i></div><div class="app__list-hidden">';
+    		dropdown += '</span><i class="fa fa-sliders"></i></div><div class="app__list-hidden" id="app__list-hidden">';
 
     		$.each(me.eqPresets, function(name, val){
     			if(name==sid){
